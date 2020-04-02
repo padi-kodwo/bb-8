@@ -23,14 +23,14 @@ def get_news_api_news(genre, session_id):
 
     if isinstance(genre, str) and "covid" in genre:
         genre_query = "coronavirus"
+        genre = None
 
-    sources = util.get_property("newsApiSection", "news.api.sources.list")
+    if genre is None:
+        sources = util.get_property("newsApiSection", "news.api.sources")
+    else:
+        sources = util.get_property("newsApiSection", "news.api.sources." + genre.lower())
 
-    top_headlines = news_api.get_top_headlines(q=genre_query,
-                                               sources=sources,
-                                               category=None,
-                                               language='en',
-                                               country=None)
+    top_headlines = news_api.get_top_headlines(q=genre_query, sources=sources, category=None, language='en', country=None)
 
     logger.info("[ " + session_id + " ] done getting news for genre " + str(genre))
 

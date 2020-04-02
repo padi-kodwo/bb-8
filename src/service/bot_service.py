@@ -29,6 +29,12 @@ def get_reply(message, session_id):
         elif "newsbot" in message.replace(" ", "").lower():
             return response_text, "greetings_quick_reply"
 
+        elif "iwantmore" in message.replace(" ", "").lower():
+            return response_text, "greetings_quick_reply"
+
+        elif "news" == message.replace(" ", "").lower():
+            return response_text, "greetings_quick_reply"
+
         else:
             dialog_flow_obj = Dialogflow(message)
             dialog_flow_respond = dialog_flow_obj.get_kb_response()
@@ -142,7 +148,7 @@ def send_thinking_typing(recipient_id, session_id):
         "sender_action": "typing_on"  # typing_off
     })
 
-    time.sleep(3)
+    time.sleep(2)
     fb_response = requests.post(url=url, params=params, headers=headers, data=data)
 
     logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
@@ -169,7 +175,7 @@ def send_read(recipient_id, session_id):
         "sender_action": "mark_seen"  # typing_off
     })
 
-    time.sleep(3)
+    time.sleep(2)
     fb_response = requests.post(url=url, params=params, headers=headers, data=data)
 
     logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
