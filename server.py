@@ -3,6 +3,7 @@ import json
 import logging as logger
 import logging.config
 import threading
+import time
 
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -55,6 +56,7 @@ def bot_controller():
 
     if data["object"] == "page":
         for entry in data["entry"]:
+            logger.info("here " + str(entry))
             for messaging_event in entry["messaging"]:
 
                 if messaging_event.get("message"):  # someone sent the bot a message
@@ -63,8 +65,7 @@ def bot_controller():
 
                     bot_service.send_read(sender_id, session_id)
 
-                    logger.info(
-                        "[ " + session_id + " ] about to process incoming message " + str(messaging_event["message"]))
+                    logger.info("[ " + session_id + " ] about to process incoming message " + str(messaging_event["message"]))
 
                     # threading the bot read message state to reduce latency
                     thread = threading.Thread(target=bot_service.send_thinking_typing, args=(sender_id, session_id,))
@@ -110,6 +111,23 @@ def bot_controller():
                     pass
 
                 elif messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+
+                    message = messaging_event["postback"]
+
+                    if message.get("payload"):
+                        if "ok" in message["payload"]:
+                            sender_id = messaging_event["sender"]["id"]
+
+                            bot_service.send_read(sender_id, session_id)
+
+                            # threading the bot read message state to reduce latency
+                            thread = threading.Thread(target=bot_service.send_thinking_typing, args=(sender_id, session_id,))
+                            thread.start()
+
+                            time.sleep(2)
+
+                            bot_service.send_message(recipient_id=sender_id, message="ayt", session_id=session_id)
+
                     pass
 
     return "ok", 200
