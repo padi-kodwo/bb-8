@@ -26,7 +26,7 @@ def get_reply(message, session_id):
             response_text = response_text_list[1].strip(" ")
             return response_text, "genre_carousel_reply"
 
-        elif "newsbot" in message.replace(" ", "").lower() :
+        elif "newsbot" in message.replace(" ", "").lower():
             return response_text, "greetings_quick_reply"
 
         else:
@@ -75,7 +75,6 @@ def send_message(recipient_id, message, session_id):
     access_token = util.get_property(property_section="facebookSection", property_name="fb.access.token")
     url = util.get_property(property_section="facebookSection", property_name="fb.messages.url")
 
-    hey = u'\U0001F604'
     params = {
         "access_token": access_token
     }
@@ -97,6 +96,8 @@ def send_message(recipient_id, message, session_id):
 
     fb_response = requests.post(url=url, params=params, headers=headers, data=data)
 
+    logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
+
     return
 
 
@@ -109,13 +110,15 @@ def send_template(message, session_id):
     params = {
         "access_token": access_token
     }
+
     headers = {
         "Content-Type": "application/json"
     }
 
     time.sleep(4)
-
     fb_response = requests.post(url=url, params=params, headers=headers, data=message)
+
+    logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
 
     return
 
@@ -140,8 +143,10 @@ def send_thinking_typing(recipient_id, session_id):
     })
 
     time.sleep(3)
-
     fb_response = requests.post(url=url, params=params, headers=headers, data=data)
+
+    logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
+
     return
 
 
@@ -166,6 +171,9 @@ def send_read(recipient_id, session_id):
 
     time.sleep(3)
     fb_response = requests.post(url=url, params=params, headers=headers, data=data)
+
+    logger.info("[ " + session_id + " ] message response " + str(fb_response.content))
+
     return
 
 

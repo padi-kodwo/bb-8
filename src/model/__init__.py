@@ -85,9 +85,6 @@ def get_genre_templates(recipient_id, genre, session_id):
 
     news_api_genres_list = util.get_property(property_section="newsApiSection", property_name="news.api.genres.list").split(",")
 
-
-    elements = []
-
     if genre.lower() in news_api_genres_list:
         elements = get_from_news_api(genre, session_id)
     else:
@@ -115,7 +112,7 @@ def get_from_news_api(genre, session_id):
     response = news_service.get_news_api_news(genre, session_id)
     response_results = response["articles"]
 
-    #default_news_image = util.get_property(property_section="serverSection", property_name="server.address.url")
+    # default_news_image = util.get_property(property_section="serverSection", property_name="server.address.url")
     default_news_image = util.get_property(property_section="imageSection", property_name="default.news.image")
 
     elements = []
@@ -128,7 +125,7 @@ def get_from_news_api(genre, session_id):
                 {
                     "type": "web_url",
                     "url": result["url"],
-                    "title": "View Website"
+                    "title": "read story"
                 }, {
                     "type": "postback",
                     "title": "Continue Chatting",
@@ -175,7 +172,7 @@ def get_from_nyt_api(genre, session_id):
                 {
                     "type": "web_url",
                     "url": result["url"],
-                    "title": "View Website"
+                    "title": "read story"
                 }, {
                     "type": "postback",
                     "title": "Continue Chatting",
@@ -197,7 +194,7 @@ def get_from_nyt_api(genre, session_id):
 
             elements.append(element)
 
-            count +=1
+            count += 1
         else:
             break
 

@@ -24,8 +24,10 @@ def get_news_api_news(genre, session_id):
     if isinstance(genre, str) and "covid" in genre:
         genre_query = "coronavirus"
 
+    sources = util.get_property("newsApiSection", "news.api.sources.list")
+
     top_headlines = news_api.get_top_headlines(q=genre_query,
-                                               sources='bbc-news,the-verge,abc-news,al-jazeera-english,bloomberg,cnbc',
+                                               sources=sources,
                                                category=None,
                                                language='en',
                                                country=None)
@@ -34,10 +36,11 @@ def get_news_api_news(genre, session_id):
 
     return top_headlines
 
+
 def get_nyt_news(genre, session_id):
 
     logger.info("[ " + session_id + " ] about get news for genre " + genre)
-    news_api_genres_list = util.get_property(property_section="newsApiSection", property_name="news.api.genres.list").split(",")
+    # news_api_genres_list = util.get_property(property_section="newsApiSection", property_name="news.api.genres.list").split(",")
 
     url = util.get_property("nytSection", "nyt.api.url." + genre.lower()) + "?api-key="
     url_request = urllib.request.urlopen(url + util.get_property("nytSection", "nyt.api.key"))

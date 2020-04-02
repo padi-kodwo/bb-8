@@ -1,4 +1,4 @@
-# serve.py
+# server.py
 import json
 import logging as logger
 import logging.config
