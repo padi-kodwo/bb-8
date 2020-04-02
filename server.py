@@ -5,7 +5,7 @@ import logging.config
 import threading
 import time
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from flask_cors import CORS
 from waitress import serve
 
