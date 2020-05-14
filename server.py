@@ -135,7 +135,7 @@ def bot_controller():
 
 # run the application
 if __name__ == "__main__":
-    server_type = "flask"
+    server_type = "waitress"
     host = util.get_property(property_section="serverSection", property_name="host.name")
     port = util.get_property(property_section="serverSection", property_name="host.port")
 
