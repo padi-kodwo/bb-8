@@ -43,6 +43,7 @@ def get_nyt_news(genre, session_id):
     # news_api_genres_list = util.get_property(property_section="newsApiSection", property_name="news.api.genres.list").split(",")
 
     url = util.get_property("nytSection", "nyt.api.url." + genre.lower()) + "?api-key="
+    logger.info("[ " + session_id + " ] url to call is " + url + util.get_property("nytSection", "nyt.api.key"))
     url_request = urllib.request.urlopen(url + util.get_property("nytSection", "nyt.api.key"))
 
     json_response = json.loads(url_request.read())
@@ -64,4 +65,4 @@ def get_science_news():
 
 if __name__ == '__main__':
     print("i am here".replace(" ", ""))
-    print(get_news_api_news("covid-19", "test101"))
+    print(get_news_api_news("sports", "test101"))
