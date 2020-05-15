@@ -32,7 +32,7 @@ def home():
 @app.route("/api/v1/bot", methods=["GET"])
 def verify():
     session_id = util.session_id()
-    logger.info("[ " + session_id + " ] about to process bot request " + str(request.json))
+    logger.info("[ " + session_id + " ] about to process bot request " + str(request))
 
     # when the endpoint is registered as a web hook, it must echo back
     # the 'hub.challenge' value it receives in the query arguments
